@@ -1,100 +1,115 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Alcôve</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#1a1521"><link rel="icon" href="icon-192.png">
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Alcôve</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#efeee9"><link rel="icon" href="icon-192.png">
 <style>
-:root{--bg:#1a1521;--card:#241d2e;--ink:#f1ecf6;--mut:#9d92ab;--ac:#e0a458}
-@media(prefers-color-scheme:light){:root{--bg:#ece7f1;--card:#f8f5fb;--ink:#211a2b;--mut:#6f6580}}
+:root{--bg:#efeee9;--ink:#23262d;--mut:#7a7d85;--ac:#c2553d;--dot:#23262d30}
+@media(prefers-color-scheme:dark){:root{--bg:#1e2026;--ink:#ecebe6;--mut:#9a9da6;--dot:#ecebe633}}
 *{box-sizing:border-box;margin:0}
-body{background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,sans-serif;padding:env(safe-area-inset-top) 16px calc(84px + env(safe-area-inset-bottom))}
-h1,h2,h3,.big{font-family:'Iowan Old Style',Palatino,Georgia,'Noto Serif',serif;font-weight:600;line-height:1.15}
-h1{font-size:2rem;padding:20px 0 4px}h2{font-size:1.3rem;margin:26px 0 10px}
-.mut{color:var(--mut);font-size:.9rem}
-.niche{background:radial-gradient(ellipse at 50% 100%,color-mix(in srgb,var(--ac) 38%,transparent),transparent 70%),var(--card);border-radius:999px 999px 22px 22px;padding:56px 22px 26px;text-align:center;margin-top:14px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ac) 45%,transparent)}
-.niche svg{width:120px;height:120px;stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.niche .big{font-size:2.4rem;margin:8px 0 2px;letter-spacing:.04em}
-.pal{display:flex;gap:8px}.pal i{flex:1;aspect-ratio:1/1.5;border-radius:999px 999px 10px 10px}
-.bar{display:grid;grid-template-columns:96px 1fr;gap:10px;align-items:center;margin:6px 0;font-size:.9rem}
-.bar span{height:8px;border-radius:4px;background:color-mix(in srgb,var(--ink) 12%,transparent);overflow:hidden}.bar b{display:block;height:100%;background:var(--ac)}
-.chips{display:flex;flex-wrap:wrap;gap:6px}.chips u{text-decoration:none;background:var(--card);border-radius:14px;padding:3px 11px;font-size:.88rem}
-.chips u em{color:var(--ac);font-style:normal;margin-left:5px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stats div{background:var(--card);border-radius:14px;padding:12px 6px;text-align:center}.stats .big{font-size:1.6rem;display:block}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
-figure img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:999px 999px 8px 8px;background:var(--card);display:block}
-figure i{display:flex;height:5px;margin:4px 10px 0;border-radius:3px;overflow:hidden}figure i b{flex:1}figcaption{text-align:center;font-size:.78rem;color:var(--mut)}
-.card{background:var(--card);border-radius:18px;padding:18px;margin-top:14px}
-button,label.btn,input,select{font:inherit;color:inherit}
-button,label.btn{display:block;width:100%;background:var(--ac);color:#1a1521;border:0;border-radius:14px;padding:12px;margin-top:10px;text-align:center;font-weight:600;cursor:pointer}
-button.alt{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--mut)}
-input[type=text]{width:100%;background:transparent;border:0;box-shadow:inset 0 0 0 1px var(--mut);border-radius:12px;padding:11px;margin-top:8px}
-nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);padding:6px 6px calc(6px + env(safe-area-inset-bottom));gap:4px}
-nav button{margin:0;background:none;color:var(--mut);padding:12px 4px}nav button.on{color:var(--ink);box-shadow:inset 0 -3px var(--ac);border-radius:0}
+body{background:radial-gradient(var(--dot) 1px,transparent 1.3px) 0 0/22px 22px var(--bg);color:var(--ink);font:16px/1.55 system-ui,sans-serif;padding:env(safe-area-inset-top) 18px calc(80px + env(safe-area-inset-bottom))}
+h1,h2,.big{font-family:'Iowan Old Style',Palatino,Georgia,'Noto Serif',serif;font-weight:600}
+h1{font-size:2.3rem;padding:22px 0 0;line-height:1}h2{font-size:1.25rem;margin:30px 0 12px;padding-bottom:3px;border-bottom:3px double var(--ink)}
+.mut,.l span{color:var(--mut);font-size:.88rem}
+.tk{border:2px solid var(--ink);border-radius:4px 26px 4px 26px;padding:18px;display:flex;gap:16px;align-items:center;margin-top:16px;background:var(--bg)}
+.tk svg{flex:none;width:96px;height:96px;stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.tk .big{font-size:1.9rem;letter-spacing:.05em;line-height:1.1}
+.pal{display:flex;padding-left:12px}.pal i{width:58px;height:58px;border-radius:50%;margin-left:-12px;opacity:.92;box-shadow:0 0 0 3px var(--bg)}
+.sc{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dotted var(--mut)}.sc em{font-style:normal;color:var(--ac);letter-spacing:2px}
+.li{padding:5px 0 5px 22px;position:relative}.li::before{content:"•";position:absolute;left:4px;color:var(--ac)}.li.o::before{content:"○"}
+.ix{display:flex;gap:8px;padding:4px 0;cursor:pointer}.ix s{flex:1;border-bottom:2px dotted var(--mut);transform:translateY(-6px)}.ix.on{color:var(--ac);font-weight:600}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.cal b{aspect-ratio:1;border-radius:50%;border:1.5px solid var(--dot);font:.62rem/1 system-ui;color:var(--mut);display:grid;place-items:center;font-weight:400}.cal b.d{border:0;cursor:pointer;box-shadow:0 0 0 2px var(--bg),0 0 0 3px var(--ink)}
+.card{border:1.5px dashed var(--mut);border-radius:14px;padding:14px;margin-top:12px}
+button,label.btn{display:block;width:100%;background:var(--ink);color:var(--bg);border:0;border-radius:10px;padding:11px;margin-top:9px;text-align:center;font:inherit;font-weight:600;cursor:pointer}
+button.alt,label.btn.alt{background:none;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+input{font:inherit;color:inherit;width:100%;background:none;border:0;border-bottom:1.5px solid var(--ink);padding:8px 2px;margin-top:8px;border-radius:0}
+.l{list-style:none;padding:0}.l li{padding:5px 0;border-bottom:1px dotted var(--mut)}.l a{float:right;color:var(--ac);padding:0 6px;cursor:pointer}
+p[data-r]{padding:6px 0;cursor:pointer}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--bg);border-top:1.5px solid var(--ink);padding-bottom:env(safe-area-inset-bottom)}
+nav button{margin:0;background:none;color:var(--mut);border-radius:0;padding:14px 2px;font-weight:500}nav button.on{color:var(--ink);box-shadow:inset 0 3px var(--ac)}
 </style></head><body>
 <h1>Alcôve</h1><p class="mut" id="sub"></p><main id="m"></main>
-<nav><button data-t="p" class="on">Profil</button><button data-t="g">Pièces</button><button data-t="d">Données</button></nav>
+<nav><button data-t="p" class="on">Carnet</button><button data-t="j">Journal</button><button data-t="c">Collections</button><button data-t="d">Données</button></nav>
 <script>
 const $=s=>document.querySelector(s);
 const DB=new Promise(r=>{const q=indexedDB.open('alcove',1);q.onupgradeneeded=()=>q.result.createObjectStore('kv');q.onsuccess=()=>r(q.result)});
 const kv=async(m,k,v)=>{const db=await DB;return new Promise(r=>{const s=db.transaction('kv',m=='get'?'readonly':'readwrite').objectStore('kv');const q=m=='get'?s.get(k):s.put(v,k);q.onsuccess=()=>r(q.result)})};
-let S={items:{},outfits:{}},T='p',lastBk=0;
-const save=()=>Promise.all([kv('put','items',S.items),kv('put','outfits',S.outfits)]);
+let S={items:{},outfits:{}},C={},CFG={},T='p',CT='livre',RS=[],lastBk=0;
+const save=()=>Promise.all([kv('put','items',S.items),kv('put','outfits',S.outfits),kv('put','cult',C),kv('put','cfg',CFG)]);
 const rgb=c=>`rgb(${c[0]},${c[1]},${c[2]})`;
 const load=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
 async function pal(src){const i=await load(src);if(!i)return[];const c=document.createElement('canvas');c.width=c.height=32;const x=c.getContext('2d');x.drawImage(i,0,0,32,32);const d=x.getImageData(0,0,32,32).data,b={};
 for(let p=0;p<d.length;p+=4){const r=d[p],g=d[p+1],l=d[p+2];if(d[p+3]<128)continue;const mx=Math.max(r,g,l),mn=Math.min(r,g,l);if(mn>225||(mx-mn<12&&mx>215))continue;const k=[r,g,l].map(v=>v>>5).join();const a=b[k]||(b[k]=[0,0,0,0]);a[0]+=r;a[1]+=g;a[2]+=l;a[3]++}
 return Object.values(b).sort((a,c)=>c[3]-a[3]).slice(0,3).map(a=>[a[0]/a[3]|0,a[1]/a[3]|0,a[2]/a[3]|0,a[3]])}
-async function thumb(src){const i=await load(src);const c=document.createElement('canvas');c.width=180;c.height=240;c.getContext('2d').drawImage(i,0,0,180,240);return c.toDataURL('image/webp',.8)}
 const hs=([r,g,b])=>{r/=255;g/=255;b/=255;const m=Math.max(r,g,b),n=Math.min(r,g,b),l=(m+n)/2,d=m-n;let h=0;if(d){h=m==r?((g-b)/d)%6:m==g?(b-r)/d+2:(r-g)/d+4;h=(h*60+360)%360}return[h,d?d/(1-Math.abs(2*l-1)):0]};
 const LB={ete:'Été',heritage:'Héritage',donne:'Donné',achete:'Acheté',decouvert:'Découvert','epaules-nues':'Épaules nues',decollete:'Décolleté',recoudre:'À recoudre',tache:'Taché',ecru:'Écru',vegetal:'Végétal',geometrique:'Géométrique',synthetique:'Synthétique',figuratif:'Figuratif',noeud:'Nœud'};
-const SKIP='haut bas une-piece couche exterieur chaussures accessoires ch-ouvertes ch-fermees ch-informelles autres sous-vetements'.split(' ');
+const SKIP='haut bas une-piece couche exterieur chaussures accessoires ch-ouvertes ch-fermees ch-informelles autres sous-vetements poches decouvert'.split(' ');
 const lab=t=>LB[t]||(t[0].toUpperCase()+t.slice(1).replace(/-/g,' '));
 const MOT='fleuri vegetal rayures geometrique figuratif noeud'.split(' ');
 function stats(){const I=Object.values(S.items),O=Object.values(S.outfits);if(!I.length)return null;
 const sh=f=>I.filter(f).length/I.length,acc={};let W=0,warm=0,sat=0;
 I.forEach(i=>i.colors.forEach(c=>{const w=c[3]*(1+i.wears),k=c.slice(0,3).map(v=>v>>6).join(),a=acc[k]||(acc[k]=[0,0,0,0]),[h,s]=hs(c);a[0]+=c[0]*w;a[1]+=c[1]*w;a[2]+=c[2]*w;a[3]+=w;W+=w;sat+=s*w;if(h<70||h>320)warm+=w}));
 const palette=Object.values(acc).sort((a,b)=>b[3]-a[3]).slice(0,6).map(a=>[a[0]/a[3]|0,a[1]/a[3]|0,a[2]/a[3]|0]);
-const tg={};I.forEach(i=>i.tags.forEach(t=>SKIP.includes(t)||(tg[t]=(tg[t]||0)+1)));
 const ppo=O.length?O.reduce((s,o)=>s+o.pieces.length,0)/O.length:3,cl=v=>Math.max(0,Math.min(1,v));
-return{n:I.length,o:O.length,palette,tags:Object.entries(tg).sort((a,b)=>b[1]-a[1]).slice(0,12),once:I.filter(i=>i.wears<2).length,
-ax:[sh(i=>i.wears>=2),cl((ppo-2)/3),sh(i=>i.tags.includes('heritage')||i.tags.includes('donne')),W?warm/W:.5,cl(.5*sh(i=>MOT.some(t=>i.tags.includes(t)))*2+.5*(W?sat/W:0))]}}
+return{n:I.length,o:O.length,palette,once:I.filter(i=>i.wears<2).length,I,
+ax:[sh(i=>i.wears>=2),cl((ppo-2)/3),sh(i=>i.tags.includes('heritage')||i.tags.includes('donne')),W?warm/W:.5,cl(sh(i=>MOT.some(t=>i.tags.includes(t)))+(W?sat/W:0)/2)]}}
 const AXL=['Ordre','Modularité','Héritage','Chaleur','Audace'];
-const F={BILLY:'<rect x="24" y="8" width="52" height="84"/><path d="M24 36h52M24 64h52"/>',
-KALLAX:'<rect x="12" y="12" width="76" height="76"/><path d="M37 12v76M62 12v76M12 37h76M12 62h76"/>',
-'POÄNG':'<path d="M30 12c-8 22-8 42 4 60h34M30 12c14 8 26 24 30 50M34 72l-6 18M68 72l6 18"/>',
-EKTORP:'<rect x="10" y="40" width="80" height="34" rx="10"/><path d="M18 40V26q0-8 8-8h48q8 0 8 8v14M20 74v10M80 74v10"/>',
-STOCKHOLM:'<rect x="8" y="30" width="84" height="40" rx="3"/><path d="M36 70V30M64 70V30M14 70l-3 20M86 70l3 20"/><circle cx="32" cy="50" r="2"/><circle cx="68" cy="50" r="2"/>',
-LACK:'<rect x="14" y="30" width="72" height="10" rx="2"/><path d="M22 40v46M78 40v46"/>'};
-const AR={BILLY:[[.8,.5,.3,.4,.2],'Rangé·e, fiable, jamais à court d’étagères.','H 202 × L 80 cm · montage : 1 h'],
-KALLAX:[[.6,.9,.3,.5,.5],'Tout se combine, tout se range en cases.','H 147 × L 147 cm · montage : 2 h'],
-'POÄNG':[[.4,.3,.6,.6,.4],'Une courbe douce, un endroit où se poser.','H 100 × L 68 cm · montage : 40 min'],
-EKTORP:[[.5,.4,.8,.7,.3],'Chaleur, héritage et coussins qui ont vécu.','H 88 × L 218 cm · montage : 1 h 30'],
-STOCKHOLM:[[.4,.4,.4,.5,.9],'Une pièce de caractère, jamais anonyme.','H 74 × L 180 cm · montage : 3 h, clé Allen fournie'],
-LACK:[[.3,.7,.1,.2,.1],'Sobre, léger, s’adapte à tout.','H 45 × L 55 cm · montage : 10 min']};
-function pick(ax){return Object.entries(AR).map(([n,a])=>[n,a[0].reduce((s,v,j)=>s+(v-ax[j])**2,0)]).sort((a,b)=>a[1]-b[1])[0][0]}
+const F={BILLY:'<rect x="24" y="8" width="52" height="84"/><path d="M24 36h52M24 64h52"/>',KALLAX:'<rect x="12" y="12" width="76" height="76"/><path d="M37 12v76M62 12v76M12 37h76M12 62h76"/>',
+'POÄNG':'<path d="M30 12c-8 22-8 42 4 60h34M30 12c14 8 26 24 30 50M34 72l-6 18M68 72l6 18"/>',EKTORP:'<rect x="10" y="40" width="80" height="34" rx="10"/><path d="M18 40V26q0-8 8-8h48q8 0 8 8v14M20 74v10M80 74v10"/>',
+STOCKHOLM:'<rect x="8" y="30" width="84" height="40" rx="3"/><path d="M36 70V30M64 70V30M14 70l-3 20M86 70l3 20"/><circle cx="32" cy="50" r="2"/><circle cx="68" cy="50" r="2"/>',LACK:'<rect x="14" y="30" width="72" height="10" rx="2"/><path d="M22 40v46M78 40v46"/>'};
+const AR={BILLY:[[.8,.5,.3,.4,.2],'Rangé·e, fiable, jamais à court d’étagères.','H 202 × L 80 cm · montage : 1 h'],KALLAX:[[.6,.9,.3,.5,.5],'Tout se combine, tout se range en cases.','H 147 × L 147 cm · montage : 2 h'],
+'POÄNG':[[.4,.3,.6,.6,.4],'Une courbe douce, un endroit où se poser.','H 100 × L 68 cm · montage : 40 min'],EKTORP:[[.5,.4,.8,.7,.3],'Chaleur, héritage et coussins qui ont vécu.','H 88 × L 218 cm · montage : 1 h 30'],
+STOCKHOLM:[[.4,.4,.4,.5,.9],'Une pièce de caractère, jamais anonyme.','H 74 × L 180 cm · montage : 3 h, clé Allen fournie'],LACK:[[.3,.7,.1,.2,.1],'Sobre, léger, s’adapte à tout.','H 45 × L 55 cm · montage : 10 min']};
+const pick=ax=>Object.entries(AR).map(([n,a])=>[n,a[0].reduce((s,v,j)=>s+(v-ax[j])**2,0)]).sort((a,b)=>a[1]-b[1])[0][0];
+const AE={Cottagecore:'fleuri vegetal lin coton jupe-ample robe tunique',"Dark academia":'brun noir laine velours cote bordeaux veste',Y2K:'brillant paillettes crop-top rose metallique brillants',Coquette:'noeud dentelle rose ecru ballerines ajoure',Minimaliste:'noir blanc gris beige pantalon-fluide lin'};
+function diag(s){const ae=Object.entries(AE).map(([n,t])=>[n,s.I.reduce((a,i)=>a+t.split(' ').filter(x=>i.tags.includes(x)).length/3,0)/s.n]).sort((a,b)=>b[1]-a[1]);
+const SE={printemps:'Printemps',ete:'Été',automne:'Automne',hiver:'Hiver'},se=Object.entries(SE).map(([k,l])=>[l,s.I.reduce((a,i)=>a+(i.tags.includes(k)?1+i.wears:0),0)]).sort((a,b)=>b[1]-a[1])[0];
+const ys=Object.values(C).map(e=>+e.year).filter(y=>y>1000);
+return[['Aesthetic',ae[0][0]+' (puis '+ae[1][0]+')'],['Saison dominante',se[1]?se[0]:'—'],['Ère culturelle',ys.length?'vers '+Math.round(ys.reduce((a,b)=>a+b)/ys.length/10)*10:'ajoutez des années dans Collections']]}
+const dayCol=d=>{const cs=Object.values(S.outfits).filter(o=>o.date==d).flatMap(o=>o.pieces.map(p=>S.items[p]&&S.items[p].colors[0])).filter(Boolean);return cs.length?rgb([0,1,2].map(j=>cs.reduce((a,c)=>a+c[j],0)/cs.length|0)):null};
+const plab=id=>{const i=S.items[id];return i?i.tags.filter(t=>!SKIP.includes(t)).slice(0,2).map(lab).join(' ').toLowerCase():''};
+function cal(){const ms=[...new Set(Object.values(S.outfits).map(o=>o.date.slice(0,7)))].sort();return ms.map(k=>{const[y,m]=k.split('-').map(Number),n=new Date(y,m,0).getDate(),off=(new Date(y,m-1,1).getDay()+6)%7;
+return`<h2>${new Date(y,m-1,1).toLocaleDateString('fr',{month:'long',year:'numeric'})}</h2><div class="cal">${'<i></i>'.repeat(off)}${Array.from({length:n},(_,j)=>{const d=`${k}-${String(j+1).padStart(2,'0')}`,c=dayCol(d);return c?`<b class="d" data-d="${d}" style="background:${c}"></b>`:`<b>${j+1}</b>`}).join('')}</div>`}).join('')}
 function view(){const m=$('#m'),s=stats();document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==T));
 if(s)document.documentElement.style.setProperty('--ac',rgb(s.palette[0]));
-$('#sub').textContent=s?`${s.n} pièces · ${s.o} tenues`:'Votre étagère culturelle';
-if(T=='d')return m.innerHTML=data();
-if(!s)return m.innerHTML='<div class="card"><h2>Bienvenue</h2><p>Importez l’export JSON de votre garde-robe dans l’onglet Données pour voir votre profil.</p></div>';
-if(T=='g')return m.innerHTML='<div class="grid">'+Object.values(S.items).sort((a,b)=>b.wears-a.wears).map(i=>`<figure><img src="${i.thumb}" alt=""><i>${i.colors.map(c=>`<b style="background:${rgb(c)}"></b>`).join('')}</i><figcaption>${i.wears}×${i.src=='manuel'?' ✎':''}</figcaption></figure>`).join('')+'</div>';
+$('#sub').textContent=s?`${s.n} pièces · ${s.o} tenues · ${Object.keys(C).length} œuvres et médias`:'Votre carnet culturel';
+if(T=='d')return m.innerHTML=data();if(T=='c')return m.innerHTML=coll();
+if(!s)return m.innerHTML='<div class="card"><p>Page blanche. Importez l’export JSON de votre garde-robe dans Données pour ouvrir le carnet.</p></div>';
+if(T=='j')return m.innerHTML=`<p class="mut" id="dt" style="margin-top:14px">Touchez un jour pour voir la tenue.</p>${cal()}<h2>Pièces les plus portées</h2>`+S.I_sorted().map(i=>`<div class="sc"><span>${plab(i.id)||'pièce'}</span><em>${'●'.repeat(Math.min(i.wears,8))||'○'}</em></div>`).join('');
 const k=pick(s.ax);
-m.innerHTML=`<div class="niche"><svg viewBox="0 0 100 100">${F[k]}</svg><p class="mut">Votre meuble</p><div class="big">${k}</div><p>${AR[k][1]}</p><p class="mut" style="margin-top:6px">${AR[k][2]}</p><button id="sh" style="max-width:220px;margin:16px auto 0">Partager</button></div>
-<h2>Votre palette</h2><div class="pal">${s.palette.map(c=>`<i style="background:${rgb(c)}"></i>`).join('')}</div>
-<h2>Votre profil</h2>${AXL.map((l,j)=>`<div class="bar">${l}<span><b style="width:${Math.round(s.ax[j]*100)}%"></b></span></div>`).join('')}
-<h2>Ce qui revient</h2><div class="chips">${s.tags.map(([t,n])=>`<u>${lab(t)}<em>${n}</em></u>`).join('')}</div>
-<h2>En chiffres</h2><div class="stats"><div><span class="big">${s.n}</span>pièces</div><div><span class="big">${s.once}</span>portées 0-1 fois</div><div><span class="big">${s.o}</span>tenues</div></div>`;
-$('#sh').onclick=()=>{const t=`Mon meuble Ikea : ${k} — ${AR[k][1]} (Alcôve)`;navigator.share?navigator.share({text:t}):navigator.clipboard.writeText(t)}}
-function data(){const old=lastBk&&Date.now()-lastBk>2.6e9;return`<div class="card"><h3>Importer la garde-robe</h3><p class="mut">Export JSON de votre outil. Les pièces déjà connues sont fusionnées, rien n’est supprimé.</p><label class="btn">Choisir le fichier<input type="file" accept=".json" id="f" hidden></label><p class="mut" id="msg"></p></div>
-<div class="card"><h3>Ajouter une pièce</h3><input type="text" id="tg" placeholder="Tags séparés par des virgules (ex. robe, bleu, lin)"><label class="btn alt">Photo<input type="file" accept="image/*" capture="environment" id="ph" hidden></label></div>
-<div class="card"><h3>Sauvegarde</h3><p class="mut">${lastBk?(old?'Dernière sauvegarde il y a plus d’un mois.':'Dernière sauvegarde : '+new Date(lastBk).toLocaleDateString('fr')):'Aucune sauvegarde encore.'} Vos données ne vivent que sur ce téléphone.</p><button id="bk">Sauvegarder</button></div>`}
-const msg=t=>{const e=$('#msg');if(e)e.textContent=t};
+m.innerHTML=`<div class="tk"><svg viewBox="0 0 100 100">${F[k]}</svg><div><span class="mut">Votre meuble</span><div class="big">${k}</div><p>${AR[k][1]}</p><p class="mut">${AR[k][2]}</p></div></div><button class="alt" id="sh">Partager</button>
+<h2>Palette</h2><div class="pal">${s.palette.map(c=>`<i style="background:${rgb(c)}"></i>`).join('')}</div>
+<h2>Signature</h2>${AXL.map((l,j)=>{const n=Math.round(s.ax[j]*10);return`<div class="sc">${l}<em>${'●'.repeat(n)}${'○'.repeat(10-n)}</em></div>`}).join('')}
+<h2>Diagnostics</h2>${diag(s).map(([a,b])=>`<div class="li">${a} : <b>${b}</b></div>`).join('')}<div class="li o mut">Astro, cocktail, thé, Poudlard : à venir</div>`;
+$('#sh').onclick=()=>{const t=`Mon meuble Ikea : ${k}. ${AR[k][1]} (Alcôve)`;navigator.share?navigator.share({text:t}):navigator.clipboard.writeText(t)}}
+S.I_sorted=()=>Object.values(S.items).sort((a,b)=>b.wears-a.wears);
+const TY=[['livre','Livres'],['film','Films'],['serie','Séries'],['musique','Musique'],['oeuvre','Œuvres'],['monument','Monuments'],['spectacle','Spectacles']];
+function coll(){const n=t=>Object.values(C).filter(e=>e.type==t).length;
+return`<h2>Index</h2>${TY.map(([t,l])=>`<div class="ix${t==CT?' on':''}" data-ct="${t}">${l}<s></s>${n(t)}</div>`).join('')}
+<h2>${TY.find(x=>x[0]==CT)[1]}</h2><div class="card"><input id="q" placeholder="Titre ou nom"><input id="yr" placeholder="Année (facultatif)" inputmode="numeric"><button id="sr">Chercher (Wikidata)</button><button class="alt" id="ad">Ajouter tel quel</button><div id="rs"></div></div>
+<ul class="l" style="margin-top:12px">${Object.values(C).filter(e=>e.type==CT).map(e=>`<li>${e.title}${e.year?' ('+e.year+')':''} <span>${e.d||''}</span><a data-x="${e.id}">×</a></li>`).join('')}</ul>`}
+async function addC(e){if(Object.values(C).some(x=>x.type==e.type&&x.title.toLowerCase()==e.title.toLowerCase()))return;const id='c'+Date.now()+Math.random().toString(36).slice(2,5);C[id]={id,...e};await save()}
+async function srch(){const q=$('#q').value.trim();if(!q)return;$('#rs').textContent='…';try{const r=await(await fetch(`https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(q)}&language=fr&uselang=fr&limit=6&format=json&origin=*`)).json();RS=r.search||[];$('#rs').innerHTML=RS.map((x,i)=>`<p data-r="${i}">• <b>${x.label}</b> <span class="mut">${x.description||''}</span></p>`).join('')||'Aucun résultat.'}catch(e){$('#rs').textContent='Recherche indisponible (connexion ?).'}}
+function data(){const old=lastBk&&Date.now()-lastBk>2.6e9;return`<h2>Garde-robe</h2><div class="card"><p class="mut">Export JSON de votre outil : fusionné, rien n’est supprimé. Les photos ne servent qu’à extraire les couleurs, puis sont oubliées.</p><label class="btn">Importer le JSON<input type="file" accept=".json" id="f" hidden></label><p class="mut" id="msg"></p><input type="text" id="tg" placeholder="Ajouter une pièce : tags (robe, bleu, lin)"><label class="btn alt">Photo de la pièce<input type="file" accept="image/*" capture="environment" id="ph" hidden></label></div>
+<h2>Cinéma, séries, musique</h2><div class="card"><label class="btn alt">Importer un CSV Letterboxd<input type="file" accept=".csv" id="lb" hidden></label><input id="tu" placeholder="Trakt : nom d’utilisateur (profil public)" value="${CFG.tu||''}"><input id="tk" placeholder="Trakt : identifiant client" value="${CFG.tk||''}"><button class="alt" id="ts">Synchroniser Trakt</button><input id="lu" placeholder="Last.fm : nom d’utilisateur" value="${CFG.lu||''}"><input id="lk" placeholder="Last.fm : clé d’API" value="${CFG.lk||''}"><button class="alt" id="ls">Synchroniser Last.fm</button><p class="mut" id="msg2"></p></div>
+<h2>Sauvegarde</h2><div class="card"><p class="mut">${lastBk?(old?'Dernière sauvegarde il y a plus d’un mois. ':'Dernière : '+new Date(lastBk).toLocaleDateString('fr')+'. '):'Aucune sauvegarde. '}Vos données ne vivent que sur ce téléphone.</p><button id="bk">Sauvegarder</button></div>`}
+const msg=t=>{const e=$('#msg');if(e)e.textContent=t},msg2=t=>{const e=$('#msg2');if(e)e.textContent=t};
 async function imp(file){try{msg('Lecture…');const d=JSON.parse(await file.text());
-if(d.alcove){S=d.alcove;await save();T='p';return view()}
+if(d.alcove){S=d.alcove;C=d.cult||{};await save();T='p';return view()}
 const it=d.items||[];let n=0;
-for(const o of it){const old=S.items[o.id];S.items[o.id]={id:o.id,tags:o.tags||[],wears:o.wears||0,wearDates:o.wearDates||[],thumb:o.thumb||await thumb(o.photo),colors:old&&old.colors.length?old.colors:await pal(o.photo||o.thumb),src:old?old.src:'export'};msg(`Pièces ${++n}/${it.length}`)}
+for(const o of it){const old=S.items[o.id];S.items[o.id]={id:o.id,tags:o.tags||[],wears:o.wears||0,wearDates:o.wearDates||[],colors:old&&old.colors.length?old.colors:await pal(o.photo||o.thumb),src:old?old.src:'export'};msg(`Pièces ${++n}/${it.length}`)}
 for(const[k,o]of Object.entries(d.outfits||{}))S.outfits[k]={pieces:o.pieces,date:o.date,city:o.city,temp:o.weatherTemp};
 await save();T='p';view()}catch(e){msg('Fichier illisible : '+e.message)}}
-async function addPiece(file){const src=URL.createObjectURL(file),id='m'+Date.now();S.items[id]={id,tags:$('#tg').value.split(',').map(t=>t.trim().toLowerCase().replace(/\s+/g,'-')).filter(Boolean),wears:0,wearDates:[],thumb:await thumb(src),colors:await pal(src),src:'manuel'};await save();T='g';view()}
-async function backup(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({alcove:S})],{type:'application/json'}));a.download='alcove-sauvegarde-'+new Date().toISOString().slice(0,10)+'.json';a.click();lastBk=Date.now();await kv('put','bk',lastBk);view()}
-document.addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(e.target.id=='f')imp(f);if(e.target.id=='ph')addPiece(f)});
-document.addEventListener('click',e=>{if(e.target.id=='bk')backup();if(e.target.dataset.t){T=e.target.dataset.t;view()}});
-(async()=>{S.items=await kv('get','items')||{};S.outfits=await kv('get','outfits')||{};lastBk=await kv('get','bk')||0;navigator.storage&&navigator.storage.persist&&navigator.storage.persist();view()})();
+async function addPiece(f){const id='m'+Date.now();S.items[id]={id,tags:$('#tg').value.split(',').map(t=>t.trim().toLowerCase().replace(/\s+/g,'-')).filter(Boolean),wears:0,wearDates:[],colors:await pal(URL.createObjectURL(f)),src:'manuel'};await save();T='p';view()}
+const csv=t=>{const R=[];let r=[],c='',q=0;for(let i=0;i<t.length;i++){const h=t[i];if(q){if(h=='"'&&t[i+1]=='"'){c+='"';i++}else if(h=='"')q=0;else c+=h}else if(h=='"')q=1;else if(h==','){r.push(c);c=''}else if(h=='\n'){r.push(c.replace(/\r$/,''));R.push(r);r=[];c=''}else c+=h}if(c||r.length){r.push(c);R.push(r)}return R};
+async function lb(f){const R=csv(await f.text()),h=R[0],ni=h.indexOf('Name'),yi=h.indexOf('Year');let n=0;for(const r of R.slice(1))if(r[ni]){await addC({type:'film',title:r[ni],year:r[yi],d:'Letterboxd',src:'letterboxd'});n++}msg2(n+' films lus.');}
+async function sync(kind){CFG={tu:$('#tu').value.trim(),tk:$('#tk').value.trim(),lu:$('#lu').value.trim(),lk:$('#lk').value.trim()};await save();msg2('Synchronisation…');
+try{if(kind=='t'){const r=await(await fetch(`https://api.trakt.tv/users/${CFG.tu}/history?limit=100`,{headers:{'trakt-api-version':'2','trakt-api-key':CFG.tk}})).json();for(const x of r){if(x.movie)await addC({type:'film',title:x.movie.title,year:x.movie.year,d:'Trakt',src:'trakt'});if(x.show)await addC({type:'serie',title:x.show.title,year:x.show.year,d:'Trakt',src:'trakt'})}msg2(r.length+' lectures Trakt.')}
+else{const r=await(await fetch(`https://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=${CFG.lu}&api_key=${CFG.lk}&format=json&limit=50&period=6month`)).json();for(const a of r.topartists.artist)await addC({type:'musique',title:a.name,d:a.playcount+' écoutes (6 mois)',src:'lastfm'});msg2(r.topartists.artist.length+' artistes Last.fm.')}}
+catch(e){msg2('Échec : identifiants, profil privé, ou service refusant le navigateur ('+e.message+').')}}
+async function backup(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({alcove:S,cult:C})],{type:'application/json'}));a.download='alcove-sauvegarde-'+new Date().toISOString().slice(0,10)+'.json';a.click();lastBk=Date.now();await kv('put','bk',lastBk);view()}
+document.addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;({f:imp,ph:addPiece,lb}[e.target.id]||(()=>0))(f)});
+document.addEventListener('click',async e=>{const t=e.target,d=t.dataset,id=t.id;
+if(d.t){T=d.t;view()}else if(d.ct){CT=d.ct;view()}else if(id=='bk')backup();else if(id=='sr')srch();else if(id=='ts')sync('t');else if(id=='ls')sync('l');
+else if(id=='ad'){const q=$('#q').value.trim();if(q){await addC({type:CT,title:q,year:$('#yr').value,src:'manuel'});view()}}
+else if(d.x){delete C[d.x];await save();view()}
+else if(t.closest('[data-r]')){const x=RS[t.closest('[data-r]').dataset.r];await addC({type:CT,title:x.label,year:$('#yr').value,d:x.description,src:'wikidata'});view()}
+else if(d.d){const o=Object.values(S.outfits).filter(o=>o.date==d.d);$('#dt').textContent=new Date(d.d).toLocaleDateString('fr',{day:'numeric',month:'long'})+(o[0]&&o[0].temp?' · '+o[0].temp+' °C':'')+' : '+o.flatMap(o=>o.pieces.map(plab)).filter(Boolean).join(', ')}});
+(async()=>{S.items=await kv('get','items')||{};S.outfits=await kv('get','outfits')||{};C=await kv('get','cult')||{};CFG=await kv('get','cfg')||{};lastBk=await kv('get','bk')||0;Object.values(S.items).forEach(i=>delete i.thumb);navigator.storage&&navigator.storage.persist&&navigator.storage.persist();view()})();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
 </script></body></html>
