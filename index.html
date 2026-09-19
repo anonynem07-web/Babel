@@ -1,603 +1,100 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shelf</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Alcôve</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#1a1521"><link rel="icon" href="icon-192.png">
 <style>
-  :root {
-    --paper: #F5F0E4; --paper-raised: #FFFDF7; --ink: #2E2A22; --ink-soft: #726B58;
-    --sage: #8C9B79; --sage-deep: #5F7050; --rose: #E3948A; --mustard: #E0AA3E;
-    --sky: #7FA8C9; --lilac: #B79AD1; --line: rgba(46,42,34,0.16); --dot: rgba(46,42,34,0.14);
-    --font-display: 'Fraunces', Georgia, serif; --font-hand: 'Caveat', cursive; --font-body: 'Nunito', -apple-system, sans-serif;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --paper: #221F1A; --paper-raised: #2B2822; --ink: #F2ECDD; --ink-soft: #BAB29C;
-      --sage: #9FB08B; --sage-deep: #C3D2B2; --rose: #EFA79C; --mustard: #E9BE63;
-      --sky: #9AC1E1; --lilac: #CBB3E5; --line: rgba(242,236,221,0.18); --dot: rgba(242,236,221,0.16);
-    }
-  }
-  :root[data-theme="dark"] {
-    --paper: #221F1A; --paper-raised: #2B2822; --ink: #F2ECDD; --ink-soft: #BAB29C;
-    --sage: #9FB08B; --sage-deep: #C3D2B2; --rose: #EFA79C; --mustard: #E9BE63;
-    --sky: #9AC1E1; --lilac: #CBB3E5; --line: rgba(242,236,221,0.18); --dot: rgba(242,236,221,0.16);
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); min-height: 100vh;
-    background-image: radial-gradient(var(--dot) 1.2px, transparent 1.2px); background-size: 20px 20px; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 30px 20px 90px; }
-  header.top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px; gap: 14px; flex-wrap: wrap; position: relative; }
-  .brand h1 { font-family: var(--font-display); font-weight: 600; font-size: 46px; margin: 0; letter-spacing: -0.01em; color: var(--sage-deep); position: relative; display: inline-block; }
-  .brand h1::after { content: ""; position: absolute; left: -6px; right: -10px; bottom: 4px; height: 12px; background: var(--mustard); opacity: 0.45; z-index: -1; transform: rotate(-1deg); }
-  .brand .tag { font-family: var(--font-hand); font-size: 20px; color: var(--rose); margin-top: -4px; }
-  .who { text-align: right; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
-  .who b { color: var(--ink); font-weight: 700; font-family: var(--font-display); font-size: 15px; }
-  .iconbtn { background: var(--paper-raised); border: 1.5px solid var(--ink); border-radius: 30px; padding: 6px 14px; font-family: var(--font-body); font-weight: 700; font-size: 12px; color: var(--ink); cursor: pointer; box-shadow: 2px 2px 0 var(--ink); transition: transform .12s ease; }
-  .iconbtn:hover { transform: translate(-1px,-1px); }
-  .iconbtn:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--ink); }
-  .squiggle { border: none; height: 10px; margin: 14px 0 20px; background: none; position: relative; }
-  .squiggle svg { width: 100%; height: 100%; }
-  nav.tabs { display: flex; gap: 6px; margin: 0 0 22px; flex-wrap: wrap; }
-  nav.tabs button { background: var(--paper-raised); border: 1.5px solid var(--line); border-radius: 20px; padding: 7px 15px; font-family: var(--font-body); font-weight: 700; font-size: 13px; color: var(--ink-soft); cursor: pointer; transition: all .12s ease; }
-  nav.tabs button.active { color: var(--paper-raised); background: var(--sage-deep); border-color: var(--sage-deep); }
-  nav.tabs button:hover:not(.active) { border-color: var(--sage); color: var(--ink); }
-  .count { font-size: 10.5px; opacity: 0.75; margin-left: 3px; }
-  .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; gap: 10px; flex-wrap: wrap; }
-  .toolbar .msg { font-family: var(--font-hand); font-size: 16px; color: var(--ink-soft); }
-  .btnrow { display: flex; gap: 8px; flex-wrap: wrap; }
-  .btn { background: var(--sage-deep); color: var(--paper-raised); border: none; border-radius: 24px; padding: 9px 16px; font-family: var(--font-body); font-size: 13px; font-weight: 800; cursor: pointer; box-shadow: 2px 2px 0 var(--ink); }
-  .btn.secondary { background: var(--paper-raised); color: var(--ink); border: 1.5px solid var(--ink); }
-  .btn.rose { background: var(--rose); }
-  .btn:hover { transform: translate(-1px,-1px); }
-  .btn:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--ink); }
-  .shelf { display: flex; flex-direction: column; gap: 10px; }
-  .row { display: grid; grid-template-columns: 56px 1fr auto; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 12px; background: var(--paper-raised); border: 1.5px solid var(--line); }
-  .row:nth-child(3n+1) { border-left: 5px solid var(--sage); }
-  .row:nth-child(3n+2) { border-left: 5px solid var(--rose); }
-  .row:nth-child(3n+3) { border-left: 5px solid var(--mustard); }
-  .thumb { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; background: var(--paper); border: 1px solid var(--line); }
-  .thumb.placeholder { display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 20px; color: var(--ink-soft); }
-  .meta .title { font-family: var(--font-display); font-size: 16.5px; font-weight: 600; line-height: 1.25; }
-  .meta .sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
-  .badge { font-family: var(--font-hand); font-size: 13px; color: var(--sage-deep); margin-left: 6px; }
-  .when { font-family: var(--font-hand); font-size: 15px; color: var(--ink-soft); white-space: nowrap; text-align: right; }
-  .empty { padding: 60px 10px; text-align: center; color: var(--ink-soft); }
-  .empty .big { font-family: var(--font-display); font-size: 20px; color: var(--ink); margin-bottom: 6px; }
-  .insight-head { display:flex; justify-content: space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom: 18px;}
-  .insight-head .week { font-family: var(--font-hand); font-size: 18px; color: var(--ink-soft); }
-  .insight-section { font-family: var(--font-hand); font-size: 22px; color: var(--sage-deep); margin: 26px 0 12px; }
-  .insights-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 16px; }
-  .card { background: var(--paper-raised); border-radius: 14px; padding: 16px; border: 1.5px solid var(--line); position: relative; transform: rotate(var(--r,0deg)); box-shadow: 3px 4px 0 rgba(46,42,34,0.08); transition: transform .15s ease; animation: pop .35s ease backwards; }
-  .card:hover { transform: rotate(0deg) translateY(-2px); }
-  .card .tape { position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-3deg); width: 60px; height: 18px; background: linear-gradient(120deg, var(--mustard), var(--rose)); opacity: 0.55; border-radius: 2px; }
-  .card .emoji { font-size: 26px; }
-  .card .ctitle { font-family: var(--font-hand); font-size: 20px; color: var(--sage-deep); margin: 6px 0 2px; }
-  .card .cvalue { font-family: var(--font-display); font-weight: 600; font-size: 16.5px; margin-bottom: 4px; }
-  .card .cbody { font-size: 12.5px; color: var(--ink-soft); line-height: 1.4; }
-  @keyframes pop { from { opacity: 0; transform: scale(.9) rotate(var(--r,0deg)); } to { opacity: 1; transform: scale(1) rotate(var(--r,0deg)); } }
-  .disclaimer { font-family: var(--font-hand); font-size: 15px; color: var(--ink-soft); text-align:center; margin: 26px 0 6px; }
-  .overlay { position: fixed; inset: 0; background: rgba(30,28,20,0.55); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 50; }
-  .overlay.open { display: flex; }
-  .modal { background: var(--paper-raised); border-radius: 16px; width: 100%; max-width: 440px; padding: 24px; max-height: 86vh; overflow-y: auto; border: 2px solid var(--ink); }
-  .modal h2 { font-family: var(--font-display); font-size: 22px; margin: 0 0 14px; color: var(--sage-deep); }
-  .field { margin-bottom: 12px; }
-  .field label { display: block; font-size: 12px; font-weight: 700; color: var(--ink-soft); margin-bottom: 4px; }
-  .field input, .field select, .field textarea { width: 100%; padding: 9px 11px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 13.5px; }
-  .modal .actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
-  .candidates { display: flex; flex-direction: column; gap: 6px; max-height: 220px; overflow-y: auto; margin-top: 4px; }
-  .cand { display: flex; gap: 10px; align-items: center; border: 1.5px solid var(--line); border-radius: 10px; padding: 6px 8px; cursor: pointer; }
-  .cand:hover { border-color: var(--sage); }
-  .cand img { width: 34px; height: 34px; object-fit: cover; border-radius: 5px; }
-  .cand .t { font-size: 13px; } .cand .s { font-size: 11px; color: var(--ink-soft); }
-  .hint { font-size: 11px; color: var(--ink-soft); margin-top: 4px; }
-  footer.note { text-align: center; font-family: var(--font-hand); font-size: 15px; color: var(--ink-soft); margin-top: 40px; }
-  .styleempty { text-align:center; padding: 50px 20px; color: var(--ink-soft); }
-  .wardrobe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
-  .wcard { background: var(--paper-raised); border: 1.5px solid var(--line); border-radius: 10px; overflow: hidden; }
-  .wcard img { width: 100%; height: 110px; object-fit: cover; display: block; }
-  .wcard .wtags { font-size: 10px; color: var(--ink-soft); padding: 5px 6px; }
-</style>
-</head>
-<body>
-<div class="wrap">
-  <header class="top">
-    <div class="brand"><h1>Shelf</h1><div class="tag">what's actually on it</div></div>
-    <div class="who">
-      <div><b id="whoName">—</b></div>
-      <div id="whoSign"></div>
-      <button class="iconbtn" id="settingsBtn" style="margin-top:6px;">Réglages</button>
-    </div>
-  </header>
-
-  <div class="squiggle"><svg viewBox="0 0 600 10" preserveAspectRatio="none"><path d="M0,5 Q15,0 30,5 T60,5 T90,5 T120,5 T150,5 T180,5 T210,5 T240,5 T270,5 T300,5 T330,5 T360,5 T390,5 T420,5 T450,5 T480,5 T510,5 T540,5 T570,5 T600,5" stroke="var(--rose)" stroke-width="2" fill="none"/></svg></div>
-
-  <nav class="tabs" id="tabs"></nav>
-
-  <div id="viewShelf">
-    <div class="toolbar">
-      <div class="msg" id="statusMsg">—</div>
-      <div class="btnrow">
-        <button class="btn secondary" id="refreshBtn">Actualiser Last.fm / Letterboxd</button>
-        <button class="btn" id="addBtn">+ Ajouter</button>
-      </div>
-    </div>
-    <div class="shelf" id="shelf"></div>
-  </div>
-
-  <div id="viewStyle" style="display:none;">
-    <div class="toolbar">
-      <div class="msg" id="wardrobeMsg">Ta garde-robe, importée depuis ton app.</div>
-      <div class="btnrow"><button class="btn" id="importWardrobeBtn">Importer le JSON garde-robe</button></div>
-    </div>
-    <div id="styleGrid" class="wardrobe-grid"></div>
-  </div>
-
-  <div id="viewInsights" style="display:none;">
-    <div class="insight-head">
-      <div class="week" id="weekLabel">Semaine —</div>
-      <button class="btn rose" id="reshuffleBtn">🎲 Retenter cette semaine</button>
-    </div>
-    <div id="insightsWrap"></div>
-    <div class="disclaimer">pour le fun, pas une vraie science — renouvelé chaque semaine ✦</div>
-  </div>
-
-  <footer class="note">musique &amp; films/séries en direct · style depuis ta garde-robe · le reste à la main ✎</footer>
-</div>
-
-<div class="overlay" id="settingsOverlay">
-  <div class="modal">
-    <h2>Réglages</h2>
-    <div class="field"><label>Ton prénom</label><input id="setName" placeholder="Line"></div>
-    <div class="field"><label>Signe astrologique (facultatif)</label><input id="setSign" placeholder="ex. Balance"></div>
-    <hr style="border:none;border-top:1.5px solid var(--line);margin:16px 0;">
-    <div class="field"><label>Nom d'utilisateur Last.fm</label><input id="setLastfmUser" placeholder="ex. lineXYZ"></div>
-    <div class="field"><label>Clé API Last.fm</label><input id="setLastfmKey" placeholder="colle ta clé ici"><div class="hint">Gratuite et instantanée : last.fm/api/account/create</div></div>
-    <hr style="border:none;border-top:1.5px solid var(--line);margin:16px 0;">
-    <div class="field"><label>Nom d'utilisateur Letterboxd</label><input id="setLetterboxdUser" placeholder="ex. line"></div>
-    <div class="actions">
-      <button class="btn secondary" id="settingsCancel">Annuler</button>
-      <button class="btn" id="settingsSave">Enregistrer</button>
-    </div>
-  </div>
-</div>
-
-<div class="overlay" id="addOverlay">
-  <div class="modal">
-    <h2>Ajouter au Shelf</h2>
-    <div class="field">
-      <label>Catégorie</label>
-      <select id="addCategory">
-        <option value="livres">Livre</option><option value="oeuvres">Œuvre d'art</option>
-        <option value="artistes">Artiste</option><option value="celebrites">Célébrité</option>
-        <option value="lieux">Lieu visité</option>
-      </select>
-    </div>
-    <div class="field"><label>Titre / nom</label><input id="addQuery" placeholder="Commence à taper puis cherche..."></div>
-    <button class="btn secondary" id="addSearchBtn" style="width:100%;">Chercher une fiche</button>
-    <div class="candidates" id="addCandidates"></div>
-    <div class="hint" id="addHint"></div>
-    <div class="actions">
-      <button class="btn secondary" id="addCancel">Annuler</button>
-      <button class="btn" id="addManual">Ajouter sans fiche</button>
-    </div>
-  </div>
-</div>
-
-<div class="overlay" id="wardrobeOverlay">
-  <div class="modal">
-    <h2>Importer ta garde-robe</h2>
-    <div class="field">
-      <label>Fichier JSON exporté de ton app garde-robe</label>
-      <input type="file" id="wardrobeFile" accept="application/json">
-      <div class="hint">Tu peux réimporter chaque semaine : les pièces existantes sont simplement mises à jour, rien n'est dupliqué.</div>
-    </div>
-    <div class="actions">
-      <button class="btn secondary" id="wardrobeCancel">Annuler</button>
-      <button class="btn" id="wardrobeSave">Importer</button>
-    </div>
-  </div>
-</div>
-
+:root{--bg:#1a1521;--card:#241d2e;--ink:#f1ecf6;--mut:#9d92ab;--ac:#e0a458}
+@media(prefers-color-scheme:light){:root{--bg:#ece7f1;--card:#f8f5fb;--ink:#211a2b;--mut:#6f6580}}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,sans-serif;padding:env(safe-area-inset-top) 16px calc(84px + env(safe-area-inset-bottom))}
+h1,h2,h3,.big{font-family:'Iowan Old Style',Palatino,Georgia,'Noto Serif',serif;font-weight:600;line-height:1.15}
+h1{font-size:2rem;padding:20px 0 4px}h2{font-size:1.3rem;margin:26px 0 10px}
+.mut{color:var(--mut);font-size:.9rem}
+.niche{background:radial-gradient(ellipse at 50% 100%,color-mix(in srgb,var(--ac) 38%,transparent),transparent 70%),var(--card);border-radius:999px 999px 22px 22px;padding:56px 22px 26px;text-align:center;margin-top:14px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ac) 45%,transparent)}
+.niche svg{width:120px;height:120px;stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.niche .big{font-size:2.4rem;margin:8px 0 2px;letter-spacing:.04em}
+.pal{display:flex;gap:8px}.pal i{flex:1;aspect-ratio:1/1.5;border-radius:999px 999px 10px 10px}
+.bar{display:grid;grid-template-columns:96px 1fr;gap:10px;align-items:center;margin:6px 0;font-size:.9rem}
+.bar span{height:8px;border-radius:4px;background:color-mix(in srgb,var(--ink) 12%,transparent);overflow:hidden}.bar b{display:block;height:100%;background:var(--ac)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chips u{text-decoration:none;background:var(--card);border-radius:14px;padding:3px 11px;font-size:.88rem}
+.chips u em{color:var(--ac);font-style:normal;margin-left:5px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stats div{background:var(--card);border-radius:14px;padding:12px 6px;text-align:center}.stats .big{font-size:1.6rem;display:block}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+figure img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:999px 999px 8px 8px;background:var(--card);display:block}
+figure i{display:flex;height:5px;margin:4px 10px 0;border-radius:3px;overflow:hidden}figure i b{flex:1}figcaption{text-align:center;font-size:.78rem;color:var(--mut)}
+.card{background:var(--card);border-radius:18px;padding:18px;margin-top:14px}
+button,label.btn,input,select{font:inherit;color:inherit}
+button,label.btn{display:block;width:100%;background:var(--ac);color:#1a1521;border:0;border-radius:14px;padding:12px;margin-top:10px;text-align:center;font-weight:600;cursor:pointer}
+button.alt{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--mut)}
+input[type=text]{width:100%;background:transparent;border:0;box-shadow:inset 0 0 0 1px var(--mut);border-radius:12px;padding:11px;margin-top:8px}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);padding:6px 6px calc(6px + env(safe-area-inset-bottom));gap:4px}
+nav button{margin:0;background:none;color:var(--mut);padding:12px 4px}nav button.on{color:var(--ink);box-shadow:inset 0 -3px var(--ac);border-radius:0}
+</style></head><body>
+<h1>Alcôve</h1><p class="mut" id="sub"></p><main id="m"></main>
+<nav><button data-t="p" class="on">Profil</button><button data-t="g">Pièces</button><button data-t="d">Données</button></nav>
 <script>
-const CORS_PROXY = "https://corsproxy.io/?url=";
-
-/* ---------- portable storage (IndexedDB, no external backend) ---------- */
-const DB_NAME = "shelfdb", DB_VERSION = 1;
-let idb = null;
-function openIdb() {
-  return new Promise((resolve, reject) => {
-    const req = indexedDB.open(DB_NAME, DB_VERSION);
-    req.onupgradeneeded = () => {
-      const d = req.result;
-      if (!d.objectStoreNames.contains("items")) d.createObjectStore("items", { keyPath: "id" });
-      if (!d.objectStoreNames.contains("wardrobe")) d.createObjectStore("wardrobe", { keyPath: "id" });
-      if (!d.objectStoreNames.contains("outfits")) d.createObjectStore("outfits", { keyPath: "id" });
-      if (!d.objectStoreNames.contains("kv")) d.createObjectStore("kv", { keyPath: "key" });
-    };
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => reject(req.error);
-  });
-}
-function tx(store, mode) { return idb.transaction(store, mode).objectStore(store); }
-function idbPut(store, value) { return new Promise((res, rej) => { const r = tx(store, "readwrite").put(value); r.onsuccess = () => res(); r.onerror = () => rej(r.error); }); }
-function idbAll(store) { return new Promise((res, rej) => { const r = tx(store, "readonly").getAll(); r.onsuccess = () => res(r.result || []); r.onerror = () => rej(r.error); }); }
-function idbGet(store, key) { return new Promise((res, rej) => { const r = tx(store, "readonly").get(key); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
-
-let items = [], wardrobe = [], outfits = [], locationHistory = [];
-let settings = { name: "", sign: "", lastfmUser: "", lastfmKey: "", letterboxdUser: "" };
-let insightState = { week: "", nonce: 0 };
-let activeTab = "tout";
-
-const CATS = [
-  { id: "tout", label: "Tout", view: "shelf" },
-  { id: "musique", label: "Musique", view: "shelf" },
-  { id: "films", label: "Films & séries", view: "shelf" },
-  { id: "livres", label: "Livres", view: "shelf" },
-  { id: "oeuvres", label: "Œuvres", view: "shelf" },
-  { id: "artistes", label: "Artistes", view: "shelf" },
-  { id: "celebrites", label: "Célébrités", view: "shelf" },
-  { id: "lieux", label: "Lieux visités", view: "shelf" },
-  { id: "style", label: "✎ Style", view: "style" },
-  { id: "insights", label: "✦ Insights", view: "insights" },
-];
-
-function setStatus(t) { document.getElementById("statusMsg").textContent = t; }
-function escapeHtml(s) { return (s || "").toString().replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
-function fmtDate(iso) { if (!iso) return ""; const d = new Date(iso); if (isNaN(d)) return ""; return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' }); }
-function slug(s) { return (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""); }
-
-function renderTabs() {
-  const tabsEl = document.getElementById("tabs");
-  tabsEl.innerHTML = "";
-  CATS.forEach(c => {
-    let n = "";
-    if (c.view === "shelf") n = c.id === "tout" ? items.length : items.filter(i => i.category === c.id).length;
-    if (c.id === "style") n = wardrobe.length;
-    const b = document.createElement("button");
-    b.className = c.id === activeTab ? "active" : "";
-    b.innerHTML = c.label + (n !== "" ? ' <span class="count">' + n + '</span>' : "");
-    b.onclick = () => { activeTab = c.id; renderTabs(); renderActiveView(); };
-    tabsEl.appendChild(b);
-  });
-}
-function renderActiveView() {
-  const cat = CATS.find(c => c.id === activeTab);
-  document.getElementById("viewShelf").style.display = cat.view === "shelf" ? "" : "none";
-  document.getElementById("viewStyle").style.display = cat.view === "style" ? "" : "none";
-  document.getElementById("viewInsights").style.display = cat.view === "insights" ? "" : "none";
-  if (cat.view === "shelf") renderShelf();
-  if (cat.view === "style") renderStyle();
-  if (cat.view === "insights") renderInsights();
-}
-
-function renderShelf() {
-  const el = document.getElementById("shelf");
-  const list = (activeTab === "tout" ? items : items.filter(i => i.category === activeTab)).slice().sort((a, b) => (b.dateSort || "").localeCompare(a.dateSort || ""));
-  el.innerHTML = "";
-  if (list.length === 0) { el.innerHTML = '<div class="empty"><div class="big">Rien ici pour l\'instant</div>Ajoute quelque chose, ou actualise Last.fm / Letterboxd.</div>'; return; }
-  list.forEach(it => {
-    const row = document.createElement("div"); row.className = "row";
-    const thumbHtml = it.image ? '<img class="thumb" src="' + it.image + '" alt="">' : '<div class="thumb placeholder">' + (it.title ? it.title[0].toUpperCase() : "?") + '</div>';
-    row.innerHTML = thumbHtml + '<div class="meta"><div class="title">' + escapeHtml(it.title) + '<span class="badge">· ' + it.category + '</span></div><div class="sub">' + escapeHtml(it.subtitle || "") + '</div></div><div class="when">' + fmtDate(it.dateSort) + '</div>';
-    el.appendChild(row);
-  });
-}
-function renderStyle() {
-  const el = document.getElementById("styleGrid");
-  document.getElementById("wardrobeMsg").textContent = wardrobe.length ? wardrobe.length + " pièces · " + outfits.length + " tenues journalisées" : "Ta garde-robe, importée depuis ton app.";
-  el.innerHTML = "";
-  if (!wardrobe.length) { el.innerHTML = '<div class="styleempty">Pas encore de garde-robe importée.<br>Clique sur « Importer le JSON garde-robe » ci-dessus.</div>'; return; }
-  wardrobe.slice().sort((a,b)=>(b.wears||0)-(a.wears||0)).forEach(w => {
-    const div = document.createElement("div"); div.className = "wcard";
-    div.innerHTML = (w.photo ? '<img src="'+w.photo+'">' : '<div class="thumb placeholder" style="width:100%;height:110px;">👗</div>') +
-      '<div class="wtags">' + (w.tags||[]).slice(0,3).join(" · ") + (w.wears?' · '+w.wears+' fois':'') + '</div>';
-    el.appendChild(div);
-  });
-}
-
-/* ---------- init ---------- */
-async function initStorage() {
-  idb = await openIdb();
-  const s = await idbGet("kv", "settings"); if (s) settings = { ...settings, ...s.value };
-  const ins = await idbGet("kv", "insights"); if (ins) insightState = ins.value;
-  const loc = await idbGet("kv", "locationHistory"); if (loc) locationHistory = loc.value;
-  items = await idbAll("items");
-  wardrobe = await idbAll("wardrobe");
-  outfits = await idbAll("outfits");
-  document.getElementById("whoName").textContent = settings.name || "—";
-  document.getElementById("whoSign").textContent = settings.sign || "";
-}
-async function saveKv(key, value) { await idbPut("kv", { key, value }); }
-async function upsertItem(id, data) { await idbPut("items", { id, ...data }); items = await idbAll("items"); }
-
-/* ---------- Last.fm ---------- */
-async function syncLastfm() {
-  if (!settings.lastfmUser || !settings.lastfmKey) return;
-  setStatus("Synchronisation Last.fm...");
-  try {
-    const url = "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=" + encodeURIComponent(settings.lastfmUser) + "&api_key=" + encodeURIComponent(settings.lastfmKey) + "&format=json&limit=50";
-    const res = await fetch(url); const data = await res.json();
-    const tracks = (data.recenttracks && data.recenttracks.track) || [];
-    for (const t of tracks) {
-      if (t["@attr"] && t["@attr"].nowplaying) continue;
-      const ts = t.date && t.date.uts ? parseInt(t.date.uts, 10) * 1000 : Date.now();
-      const id = "lastfm-" + slug(t.artist["#text"] + "-" + t.name + "-" + ts);
-      const img = (t.image && t.image.length ? t.image[t.image.length - 1]["#text"] : "") || "";
-      await upsertItem(id, { category: "musique", title: t.name, subtitle: t.artist["#text"] + (t.album && t.album["#text"] ? " — " + t.album["#text"] : ""), image: img, dateSort: new Date(ts).toISOString(), source: "lastfm", artist: t.artist["#text"] });
-    }
-    renderTabs(); if (CATS.find(c=>c.id===activeTab).view==="shelf") renderShelf();
-    setStatus("Last.fm : " + tracks.length + " morceaux synchronisés.");
-  } catch (e) { setStatus("Échec Last.fm (vérifie nom d'utilisateur / clé API)."); }
-}
-/* ---------- Letterboxd ---------- */
-async function syncLetterboxd() {
-  if (!settings.letterboxdUser) return;
-  setStatus("Synchronisation Letterboxd...");
-  try {
-    const rssUrl = "https://letterboxd.com/" + encodeURIComponent(settings.letterboxdUser) + "/rss/";
-    const res = await fetch(CORS_PROXY + encodeURIComponent(rssUrl));
-    const text = await res.text();
-    const xml = new DOMParser().parseFromString(text, "text/xml");
-    const entries = Array.from(xml.querySelectorAll("item"));
-    for (const it of entries) {
-      const title = (it.querySelector("title")?.textContent || "").trim();
-      const link = (it.querySelector("link")?.textContent || "").trim();
-      const pubDate = (it.querySelector("pubDate")?.textContent || "").trim();
-      const watchedNS = it.getElementsByTagNameNS("*", "watchedDate")[0];
-      const watchedDate = watchedNS ? watchedNS.textContent : pubDate;
-      let img = ""; const desc = it.querySelector("description")?.textContent || ""; const m = desc.match(/src="([^"]+)"/); if (m) img = m[1];
-      const id = "letterboxd-" + slug(link || title + watchedDate); const d = new Date(watchedDate || pubDate);
-      await upsertItem(id, { category: "films", title: title.replace(/,\s*\d+\s*-?\s*\u2605?.*$/, "").trim() || title, subtitle: "vu le " + (isNaN(d) ? "" : d.toLocaleDateString('fr-FR')), image: img, dateSort: isNaN(d) ? new Date().toISOString() : d.toISOString(), source: "letterboxd", url: link });
-    }
-    renderTabs(); if (CATS.find(c=>c.id===activeTab).view==="shelf") renderShelf();
-    setStatus("Letterboxd : " + entries.length + " entrées synchronisées.");
-  } catch (e) { setStatus("Échec Letterboxd (le proxy CORS a peut-être bloqué la requête, réessaie)."); }
-}
-async function syncAll() { await Promise.all([syncLastfm(), syncLetterboxd()]); }
-
-/* ---------- manual add search ---------- */
-async function searchOpenLibrary(q) {
-  const res = await fetch("https://openlibrary.org/search.json?q=" + encodeURIComponent(q) + "&limit=6");
-  const data = await res.json();
-  return (data.docs || []).map(d => ({ title: d.title, subtitle: (d.author_name ? d.author_name.join(", ") : "") + (d.first_publish_year ? " · " + d.first_publish_year : ""), image: d.cover_i ? "https://covers.openlibrary.org/b/id/" + d.cover_i + "-M.jpg" : "", url: d.key ? "https://openlibrary.org" + d.key : "" }));
-}
-async function searchWikidata(q) {
-  const res = await fetch("https://www.wikidata.org/w/api.php?action=wbsearchentities&search=" + encodeURIComponent(q) + "&language=fr&format=json&origin=*&limit=6");
-  const data = await res.json(); const results = data.search || []; const out = [];
-  for (const r of results) {
-    let img = "";
-    try {
-      const claimsRes = await fetch("https://www.wikidata.org/w/api.php?action=wbgetclaims&entity=" + r.id + "&property=P18&format=json&origin=*");
-      const claimsData = await claimsRes.json(); const claims = claimsData.claims && claimsData.claims.P18;
-      if (claims && claims.length) { const fname = claims[0].mainsnak.datavalue.value; img = "https://commons.wikimedia.org/wiki/Special:FilePath/" + encodeURIComponent(fname) + "?width=200"; }
-    } catch (e) {}
-    out.push({ title: r.label, subtitle: r.description || "", image: img, url: r.concepturi || "" });
-  }
-  return out;
-}
-async function runSearch() {
-  const cat = document.getElementById("addCategory").value; const q = document.getElementById("addQuery").value.trim();
-  const candEl = document.getElementById("addCandidates"); const hintEl = document.getElementById("addHint");
-  if (!q) return; candEl.innerHTML = ""; hintEl.textContent = "Recherche en cours...";
-  try {
-    const results = cat === "livres" ? await searchOpenLibrary(q) : await searchWikidata(q);
-    hintEl.textContent = results.length ? "Choisis une fiche, ou ajoute sans fiche ci-dessous." : "Rien trouvé — ajoute sans fiche.";
-    results.forEach(r => {
-      const div = document.createElement("div"); div.className = "cand";
-      div.innerHTML = (r.image ? '<img src="' + r.image + '">' : '<div class="thumb placeholder" style="width:34px;height:34px;">' + (r.title[0] || "?") + '</div>') + '<div><div class="t">' + escapeHtml(r.title) + '</div><div class="s">' + escapeHtml(r.subtitle) + '</div></div>';
-      div.onclick = () => saveManualItem(cat, r.title, r.subtitle, r.image, r.url);
-      candEl.appendChild(div);
-    });
-  } catch (e) { hintEl.textContent = "Erreur de recherche — ajoute sans fiche."; }
-}
-async function saveManualItem(cat, title, subtitle, image, url) {
-  const id = "manual-" + cat + "-" + slug(title) + "-" + Date.now();
-  await upsertItem(id, { category: cat, title, subtitle: subtitle || "", image: image || "", dateSort: new Date().toISOString(), source: "manuel", url: url || "" });
-  renderTabs(); if (CATS.find(c=>c.id===activeTab).view==="shelf") renderShelf();
-  closeAddModal();
-}
-
-/* ---------- wardrobe import ---------- */
-function parseWardrobeExport(obj) {
-  const result = { items: [], outfits: [], locationHistory: [] };
-  if (Array.isArray(obj.items)) result.items = obj.items;
-  if (Array.isArray(obj.locationHistory)) result.locationHistory = obj.locationHistory;
-  Object.keys(obj).forEach(k => {
-    if (k === "items" || k === "weather" || k === "locationHistory") return;
-    const v = obj[k];
-    if (v && typeof v === "object" && Array.isArray(v.pieces)) result.outfits.push({ id: k, ...v });
-  });
-  return result;
-}
-async function importWardrobe() {
-  const fileInput = document.getElementById("wardrobeFile");
-  const file = fileInput.files[0];
-  if (!file) return;
-  try {
-    const text = await file.text();
-    const parsed = JSON.parse(text);
-    const { items: wItems, outfits: wOutfits, locationHistory: wLoc } = parseWardrobeExport(parsed);
-    for (const w of wItems) await idbPut("wardrobe", w);
-    for (const o of wOutfits) await idbPut("outfits", o);
-    if (wLoc.length) { locationHistory = wLoc; await saveKv("locationHistory", wLoc); }
-    wardrobe = await idbAll("wardrobe"); outfits = await idbAll("outfits");
-    renderTabs(); if (activeTab === "style") renderStyle();
-    document.getElementById("wardrobeOverlay").classList.remove("open");
-    fileInput.value = "";
-  } catch (e) { alert("JSON invalide — vérifie le fichier exporté."); }
-}
-
-/* ---------- Insights ---------- */
-function isoWeekKey(d) {
-  const date = new Date(d.getTime()); date.setHours(0,0,0,0);
-  date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
-  const week1 = new Date(date.getFullYear(), 0, 4);
-  const weekNo = 1 + Math.round(((date - week1) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
-  return date.getFullYear() + "-S" + weekNo;
-}
-function mulberry32(seed) { return function() { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-function hashStr(s) { let h = 0; for (let i = 0; i < s.length; i++) { h = Math.imul(31, h) + s.charCodeAt(i) | 0; } return h; }
-function pick(rng, arr) { return arr[Math.floor(rng() * arr.length)]; }
-
-const HOUSES = [{ n: "Serdaigle", d: "tu collectionnes les détails que personne d'autre ne remarque" },{ n: "Poufsouffle", d: "ta fidélité à ce que tu aimes est presque têtue, dans le bon sens" },{ n: "Serpentard", d: "tu sais ce qui a de la valeur avant que ce soit à la mode" },{ n: "Gryffondor", d: "tu t'engages entièrement dans ce qui te touche" }];
-const PATRONUS = ["renard", "loutre", "hibou grand-duc", "cerf", "chat de gouttière", "corbeau", "lynx", "papillon de nuit", "lièvre", "héron"];
-const WAND_WOOD = ["cerisier", "if", "saule", "aubépine", "noyer", "bois de rose", "chêne clair"];
-const WAND_CORE = ["plume de phénix", "ventricule de dragon", "crin de licorne", "poil de veela"];
-const MBTI_WORDS = [["Rêveuse", "I"], ["Sociale", "E"], ["Intuitive", "N"], ["Terre-à-terre", "S"], ["Sensible", "F"], ["Analytique", "T"], ["Spontanée", "P"], ["Organisée", "J"]];
-const ERAS = ["l'âge d'or hollywoodien", "le Paris des années folles", "le Londres post-punk", "la Renaissance florentine", "le New York des années 70", "un été perpétuel des années 90"];
-const CITY_VIBES = ["ville portuaire un peu mélancolique", "capitale littéraire pleine de librairies de poche", "petite ville avec un seul bon café mais excellent", "métropole nocturne, néons et jazz", "village de montagne avec une bibliothèque incroyable"];
-const TEAS = ["thé fumé, sans sucre, bu trop chaud", "chai épicé partagé avec quelqu'un", "infusion florale bue en silence", "earl grey classique, aucune fantaisie"];
-const ANIMAL_TYPES = ["chat de gouttière indépendant", "chien de berger fidèle et un peu maladroit", "cheval nerveux mais loyal une fois apprivoisé"];
-const TOTEMS = ["corbeau curieux", "renard discret", "chouette effraie", "loutre joueuse", "cerf silencieux"];
-const HOMES = ["appartement plein de livres empilés en tours instables", "maison de campagne avec une cuisine trop grande", "loft minimaliste avec une seule œuvre d'art énorme", "cottage avec un jardin en désordre organisé"];
-const PRINCESSES = ["Belle (celle qui préfère la bibliothèque au bal)", "Mérida (celle qui refuse le rôle qu'on lui donne)", "Jasmine (celle qui veut voir au-delà des murs)", "Tiana (celle qui construit ce qu'elle veut à la force du travail)", "Pocahontas (celle qui écoute avant de juger)"];
-const TSWIFT_ERAS = ["Fearless, sincère et un peu naïve sur les bords", "Red, tout en intensité et portes qui claquent", "folklore, cabane isolée et sens du détail", "Lover, pastel et sans cynisme", "reputation, armure et ironie"];
-const HALSEY_ERAS = ["badlands, désert intérieur et défiance", "Manic, fragmentée mais honnête", "If I Can't Have Love I Want Power, viscérale et maternelle"];
-const ARIANA_ERAS = ["Sweetener, douce-amère et lumineuse", "thank u, next, lucide et un peu blasée", "Positions, intime et feutrée"];
-const BEATLES_ERAS = ["l'ère Merseybeat, insouciante", "Sgt. Pepper's, expérimentale et colorée", "Abbey Road, mélancolique et mûre"];
-const READING_TYPES = ["tu relis les mêmes passages avant de continuer", "tu finis un livre en une nuit ou jamais", "tu lis trois livres en parallèle sans complexe", "tu annotes en marge comme si l'auteur allait répondre"];
-const MAJORS = ["Histoire de l'art", "Littérature comparée", "Anthropologie culturelle", "Cinéma et médias", "Musicologie", "Sciences politiques (par accident)"];
-const AURAS = ["vert sauge", "corail poussiéreux", "bleu crépuscule", "jaune moutarde", "lilas pâle", "terracotta"];
-const FANFIC_UNIVERSES = ["celui où deux rivaux doivent cohabiter un été", "celui où tout le monde s'écrit des lettres qu'il ne devrait pas envoyer", "celui où le decor est une petite ville qui garde un secret", "celui où l'héroïne revient dix ans après être partie sans un mot"];
-const MET_GALA = ["quelque chose de sculptural en satin, pas une paillette de trop", "un total look monochrome avec un seul bijou qui fait tout le travail", "une pièce d'archive revisitée, presque austère"];
-const MODEL_MATCH = ["quelqu'un qui a l'air de sortir d'un film français des années 60", "un mannequin qu'on croise plus en backstage qu'en couverture", "quelqu'un dont le charisme tient dans le sous-jeu"];
-
-function computeWardrobeStats() {
-  const tagCount = {}; let totalWears = 0;
-  wardrobe.forEach(w => { totalWears += (w.wears || 0); (w.tags || []).forEach(t => { tagCount[t] = (tagCount[t] || 0) + 1; }); });
-  const COLOR_WORDS = ["corail","orange","vert","bleu","noir","blanc","rouge","rose","jaune","marron","beige","gris","violet","kaki","bordeaux","creme","ecru","turquoise"];
-  const colorTags = Object.keys(tagCount).filter(t => COLOR_WORDS.some(c => t.includes(c))).sort((a,b)=>tagCount[b]-tagCount[a]);
-  const styleTags = Object.keys(tagCount).filter(t => !COLOR_WORDS.some(c => t.includes(c))).sort((a,b)=>tagCount[b]-tagCount[a]);
-  const mostWorn = wardrobe.slice().sort((a,b)=>(b.wears||0)-(a.wears||0))[0];
-  const leastWorn = wardrobe.filter(w=>(w.wears||0)===0)[0] || wardrobe.slice().sort((a,b)=>(a.wears||0)-(b.wears||0))[0];
-  return { colorTags, styleTags, mostWorn, leastWorn, totalWears, hasData: wardrobe.length > 0 };
-}
-
-function renderInsights() {
-  const weekKey = isoWeekKey(new Date());
-  document.getElementById("weekLabel").textContent = "Semaine " + weekKey.split("-S")[1] + ", " + weekKey.split("-S")[0];
-  const nonce = (insightState && insightState.week === weekKey) ? (insightState.nonce || 0) : 0;
-  const seed = hashStr(weekKey + "::" + nonce + "::" + (settings.name || ""));
-  const rng = mulberry32(seed);
-
-  const artists = [...new Set(items.filter(i => i.category === "musique").map(i => i.artist).filter(Boolean))];
-  const films = items.filter(i => i.category === "films");
-  const uniqueTitles = new Set(items.map(i => i.title));
-  const rarity = items.length ? Math.min(97, Math.round((uniqueTitles.size / Math.max(items.length, 1)) * 40 + rng() * 30 + 30)) : Math.round(30 + rng() * 40);
-  const pretension = Math.round(20 + rng() * 70);
-  const songPool = items.filter(i => i.category === "musique");
-  const song = songPool.length ? pick(rng, songPool) : null;
-  const unwatchedFilmIdea = films.length ? "quelque chose de proche de « " + pick(rng, films).title + " » — même énergie, réalisateur différent" : "un film que ta dernière lubie musicale te soufflerait";
-  const ws = computeWardrobeStats();
-  const dominantColor = ws.colorTags[0] || pick(rng, AURAS);
-  const dominantStyle = ws.styleTags[0] || "";
-
-  const general = [
-    { emoji: "🦉", title: "Maison Poudlard", value: pick(rng,HOUSES).n },
-    { emoji: "🦊", title: "Patronus", value: pick(rng, PATRONUS), body: "celui qui apparaît quand tu penses à ce que tu aimes vraiment" },
-    { emoji: "🪄", title: "Baguette magique", value: pick(rng, WAND_WOOD) + ", cœur en " + pick(rng, WAND_CORE) },
-    { emoji: "🔤", title: "Profil (pour rire, pas un vrai MBTI)", value: (()=>{ const pairs=[[0,1],[2,3],[4,5],[6,7]]; const chosen = pairs.map(([a,b]) => rng() > 0.5 ? MBTI_WORDS[a] : MBTI_WORDS[b]); return chosen.map(w=>w[1]).join("") + " — " + chosen.map(w=>w[0]).join(", "); })() },
-    { emoji: "📖", title: "Book boyfriend / girlfriend", value: pick(rng, ["le narrateur peu fiable qui finit par dire la vérité", "le meilleur ami qu'on aurait dû choisir depuis le début", "l'antagoniste avec de bonnes raisons", "celui qui écrit des lettres qu'il n'envoie jamais"]) },
-    { emoji: "📚", title: "Type de lectrice", value: pick(rng, READING_TYPES) },
-    { emoji: "🎓", title: "Filière selon tes goûts", value: pick(rng, MAJORS) },
-    { emoji: "✍️", title: "Univers de fanfiction où te placer", value: pick(rng, FANFIC_UNIVERSES) },
-    { emoji: "🍂", title: "Ta saison", value: pick(rng, ["fin d'été, lumière basse", "premier jour de pluie d'automne", "milieu d'hiver, tout est calme", "début de printemps, encore un peu froid"]) },
-    { emoji: "🎂", title: "Âge selon tes goûts", value: Math.round(19 + rng() * 40) + " ans" },
-    { emoji: "🏰", title: "Époque idéale", value: pick(rng, ERAS) },
-    { emoji: "🌆", title: "Vibe de ville", value: locationHistory.length ? pick(rng, locationHistory) + ", version idéalisée" : pick(rng, CITY_VIBES) },
-    { emoji: "🍵", title: "Thé idéal", value: pick(rng, TEAS) },
-    { emoji: "🏠", title: "Maison idéale", value: pick(rng, HOMES) },
-    { emoji: "🐾", title: "Chat, chien ou cheval", value: pick(rng, ANIMAL_TYPES) },
-    { emoji: "🦌", title: "Animal totem", value: pick(rng, TOTEMS) },
-    { emoji: "👑", title: "Personnage Disney", value: pick(rng, PRINCESSES) },
-    { emoji: "🚩", title: "Green flag culturel", value: pick(rng, ["tu finis ce que tu commences, même long", "tu reviens vers les mêmes œuvres sans t'excuser", "tu remarques les détails que personne ne voit"]) },
-    { emoji: "🚩", title: "Red flag culturel (pour rire)", value: pick(rng, ["tu juges un peu vite ce qui est populaire", "tu relis toujours la fin avant le milieu", "tu abandonnes une série à l'épisode 2"]) },
-    { emoji: "🎬", title: "Ce soir tu devrais regarder", value: unwatchedFilmIdea },
-    { emoji: "🎧", title: "Le titre qui te définit cette semaine", value: song ? song.title + " — " + (song.artist || "") : "reviens quand Last.fm aura plus de matière" },
-    { emoji: "💎", title: "Rareté de goût", value: rarity + "%", body: "vs. les gens aux goûts proches des tiens" },
-    { emoji: "🧐", title: "Niveau de prétention culturelle", value: pretension + "%", body: pretension > 60 ? "assumé, sans faux-semblant" : "raisonnable, un pied dans le grand public" },
-    { emoji: "🌟", title: "Ton aura", value: dominantColor + (dominantColor.length < 4 ? "" : "") },
-    { emoji: "✨", title: "Ère Taylor Swift", value: pick(rng, TSWIFT_ERAS) },
-    { emoji: "🖤", title: "Ère Halsey", value: pick(rng, HALSEY_ERAS) },
-    { emoji: "🎀", title: "Ère Ariana Grande", value: pick(rng, ARIANA_ERAS) },
-    { emoji: "🎸", title: "Ère Beatles", value: pick(rng, BEATLES_ERAS) },
-    { emoji: "💌", title: "Met Gala look qui te va", value: pick(rng, MET_GALA) },
-    { emoji: "📸", title: "Model match", value: pick(rng, MODEL_MATCH) },
-  ];
-
-  const style = ws.hasData ? [
-    { emoji: "🎨", title: "Couleur dominante de ta garde-robe", value: dominantColor, body: "d'après tes propres tags" },
-    { emoji: "🔁", title: "Ton uniforme", value: ws.styleTags.slice(0,3).join(", ") || "pas encore assez de tags", body: "ce que tu portes sans même y penser" },
-    { emoji: "🏆", title: "Pièce la plus portée", value: ws.mostWorn ? (ws.mostWorn.tags||[]).slice(0,2).join(" ") || "une pièce sans tag" : "—", body: ws.mostWorn ? ws.mostWorn.wears + " fois portée" : "" },
-    { emoji: "😴", title: "Pièce qui prend la poussière", value: ws.leastWorn ? (ws.leastWorn.tags||[]).slice(0,2).join(" ") || "une pièce sans tag" : "—", body: "celle qu'il est temps de ressortir, ou de laisser partir" },
-    { emoji: "👜", title: "Ce qu'il y a dans ton sac", value: pick(rng, ["un livre entamé, un rouge à lèvres, un billet de train froissé", "des écouteurs, un carnet, une clé USB inutile", "une carte de musée, du baume à lèvres, un stylo qui ne marche plus"]) },
-    { emoji: "🛍️", title: "Ce qu'il y a dans ton tote bag", value: pick(rng, ["un pull en trop, un magazine, une pomme oubliée", "un cahier de croquis, une gourde, un chargeur"]) },
-    { emoji: "👓", title: "Lunettes idéales", value: dominantStyle ? "monture fine, dans l'esprit " + dominantStyle : "monture ronde, écaille discrète" },
-    { emoji: "👠", title: "Chaussures idéales", value: pick(rng, ["mocassins usés avec soin", "bottines qui font du bruit sur le pavé", "ballerines increvables"]) },
-    { emoji: "💍", title: "Marque de luxe qui te correspond", value: pick(rng, ["une maison discrète que peu de gens reconnaissent", "un label qui mise sur la matière plus que le logo", "quelque chose d'ancien racheté à un revendeur"]) },
-    { emoji: "🗺️", title: "Ville qui te va le mieux", value: locationHistory.length ? pick(rng, locationHistory) : pick(rng, CITY_VIBES) },
-  ] : [];
-
-  const all = [...general, ...style];
-  const el = document.getElementById("insightsWrap");
-  el.innerHTML = "";
-  const grid = document.createElement("div"); grid.className = "insights-grid";
-  all.forEach((c, idx) => {
-    const div = document.createElement("div"); div.className = "card";
-    div.style.setProperty("--r", (idx % 2 === 0 ? -1.4 : 1.2) + "deg");
-    div.style.animationDelay = (idx * 0.02) + "s";
-    div.innerHTML = '<div class="tape"></div><div class="emoji">' + c.emoji + '</div><div class="ctitle">' + c.title + '</div><div class="cvalue">' + escapeHtml(c.value) + '</div>' + (c.body ? '<div class="cbody">' + escapeHtml(c.body) + '</div>' : '');
-    grid.appendChild(div);
-  });
-  el.appendChild(grid);
-}
-async function reshuffleWeek() {
-  const weekKey = isoWeekKey(new Date());
-  const current = (insightState && insightState.week === weekKey) ? (insightState.nonce || 0) : 0;
-  insightState = { week: weekKey, nonce: current + 1 };
-  await saveKv("insights", insightState);
-  renderInsights();
-}
-
-/* ---------- UI wiring ---------- */
-function openSettings() {
-  document.getElementById("setName").value = settings.name || ""; document.getElementById("setSign").value = settings.sign || "";
-  document.getElementById("setLastfmUser").value = settings.lastfmUser || ""; document.getElementById("setLastfmKey").value = settings.lastfmKey || "";
-  document.getElementById("setLetterboxdUser").value = settings.letterboxdUser || ""; document.getElementById("settingsOverlay").classList.add("open");
-}
-function closeSettings() { document.getElementById("settingsOverlay").classList.remove("open"); }
-async function saveSettings() {
-  settings = { name: document.getElementById("setName").value.trim(), sign: document.getElementById("setSign").value.trim(), lastfmUser: document.getElementById("setLastfmUser").value.trim(), lastfmKey: document.getElementById("setLastfmKey").value.trim(), letterboxdUser: document.getElementById("setLetterboxdUser").value.trim() };
-  await saveKv("settings", settings);
-  document.getElementById("whoName").textContent = settings.name || "—"; document.getElementById("whoSign").textContent = settings.sign || "";
-  closeSettings(); syncAll();
-}
-function openAddModal() { document.getElementById("addQuery").value = ""; document.getElementById("addCandidates").innerHTML = ""; document.getElementById("addHint").textContent = ""; document.getElementById("addOverlay").classList.add("open"); }
-function closeAddModal() { document.getElementById("addOverlay").classList.remove("open"); }
-
-window.addEventListener("DOMContentLoaded", async () => {
-  renderTabs(); renderShelf();
-  await initStorage();
-  renderTabs(); renderShelf();
-  if (settings.lastfmUser || settings.letterboxdUser) syncAll(); else setStatus("Ajoute tes identifiants Last.fm / Letterboxd dans les réglages.");
-
-  document.getElementById("settingsBtn").onclick = openSettings;
-  document.getElementById("settingsCancel").onclick = closeSettings;
-  document.getElementById("settingsSave").onclick = saveSettings;
-  document.getElementById("refreshBtn").onclick = syncAll;
-  document.getElementById("addBtn").onclick = openAddModal;
-  document.getElementById("addCancel").onclick = closeAddModal;
-  document.getElementById("addSearchBtn").onclick = runSearch;
-  document.getElementById("addManual").onclick = () => { const cat = document.getElementById("addCategory").value; const q = document.getElementById("addQuery").value.trim(); if (!q) return; saveManualItem(cat, q, "", "", ""); };
-  document.getElementById("importWardrobeBtn").onclick = () => document.getElementById("wardrobeOverlay").classList.add("open");
-  document.getElementById("wardrobeCancel").onclick = () => document.getElementById("wardrobeOverlay").classList.remove("open");
-  document.getElementById("wardrobeSave").onclick = importWardrobe;
-  document.getElementById("reshuffleBtn").onclick = reshuffleWeek;
-});
-</script>
-</body>
-</html>
+const $=s=>document.querySelector(s);
+const DB=new Promise(r=>{const q=indexedDB.open('alcove',1);q.onupgradeneeded=()=>q.result.createObjectStore('kv');q.onsuccess=()=>r(q.result)});
+const kv=async(m,k,v)=>{const db=await DB;return new Promise(r=>{const s=db.transaction('kv',m=='get'?'readonly':'readwrite').objectStore('kv');const q=m=='get'?s.get(k):s.put(v,k);q.onsuccess=()=>r(q.result)})};
+let S={items:{},outfits:{}},T='p',lastBk=0;
+const save=()=>Promise.all([kv('put','items',S.items),kv('put','outfits',S.outfits)]);
+const rgb=c=>`rgb(${c[0]},${c[1]},${c[2]})`;
+const load=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
+async function pal(src){const i=await load(src);if(!i)return[];const c=document.createElement('canvas');c.width=c.height=32;const x=c.getContext('2d');x.drawImage(i,0,0,32,32);const d=x.getImageData(0,0,32,32).data,b={};
+for(let p=0;p<d.length;p+=4){const r=d[p],g=d[p+1],l=d[p+2];if(d[p+3]<128)continue;const mx=Math.max(r,g,l),mn=Math.min(r,g,l);if(mn>225||(mx-mn<12&&mx>215))continue;const k=[r,g,l].map(v=>v>>5).join();const a=b[k]||(b[k]=[0,0,0,0]);a[0]+=r;a[1]+=g;a[2]+=l;a[3]++}
+return Object.values(b).sort((a,c)=>c[3]-a[3]).slice(0,3).map(a=>[a[0]/a[3]|0,a[1]/a[3]|0,a[2]/a[3]|0,a[3]])}
+async function thumb(src){const i=await load(src);const c=document.createElement('canvas');c.width=180;c.height=240;c.getContext('2d').drawImage(i,0,0,180,240);return c.toDataURL('image/webp',.8)}
+const hs=([r,g,b])=>{r/=255;g/=255;b/=255;const m=Math.max(r,g,b),n=Math.min(r,g,b),l=(m+n)/2,d=m-n;let h=0;if(d){h=m==r?((g-b)/d)%6:m==g?(b-r)/d+2:(r-g)/d+4;h=(h*60+360)%360}return[h,d?d/(1-Math.abs(2*l-1)):0]};
+const LB={ete:'Été',heritage:'Héritage',donne:'Donné',achete:'Acheté',decouvert:'Découvert','epaules-nues':'Épaules nues',decollete:'Décolleté',recoudre:'À recoudre',tache:'Taché',ecru:'Écru',vegetal:'Végétal',geometrique:'Géométrique',synthetique:'Synthétique',figuratif:'Figuratif',noeud:'Nœud'};
+const SKIP='haut bas une-piece couche exterieur chaussures accessoires ch-ouvertes ch-fermees ch-informelles autres sous-vetements'.split(' ');
+const lab=t=>LB[t]||(t[0].toUpperCase()+t.slice(1).replace(/-/g,' '));
+const MOT='fleuri vegetal rayures geometrique figuratif noeud'.split(' ');
+function stats(){const I=Object.values(S.items),O=Object.values(S.outfits);if(!I.length)return null;
+const sh=f=>I.filter(f).length/I.length,acc={};let W=0,warm=0,sat=0;
+I.forEach(i=>i.colors.forEach(c=>{const w=c[3]*(1+i.wears),k=c.slice(0,3).map(v=>v>>6).join(),a=acc[k]||(acc[k]=[0,0,0,0]),[h,s]=hs(c);a[0]+=c[0]*w;a[1]+=c[1]*w;a[2]+=c[2]*w;a[3]+=w;W+=w;sat+=s*w;if(h<70||h>320)warm+=w}));
+const palette=Object.values(acc).sort((a,b)=>b[3]-a[3]).slice(0,6).map(a=>[a[0]/a[3]|0,a[1]/a[3]|0,a[2]/a[3]|0]);
+const tg={};I.forEach(i=>i.tags.forEach(t=>SKIP.includes(t)||(tg[t]=(tg[t]||0)+1)));
+const ppo=O.length?O.reduce((s,o)=>s+o.pieces.length,0)/O.length:3,cl=v=>Math.max(0,Math.min(1,v));
+return{n:I.length,o:O.length,palette,tags:Object.entries(tg).sort((a,b)=>b[1]-a[1]).slice(0,12),once:I.filter(i=>i.wears<2).length,
+ax:[sh(i=>i.wears>=2),cl((ppo-2)/3),sh(i=>i.tags.includes('heritage')||i.tags.includes('donne')),W?warm/W:.5,cl(.5*sh(i=>MOT.some(t=>i.tags.includes(t)))*2+.5*(W?sat/W:0))]}}
+const AXL=['Ordre','Modularité','Héritage','Chaleur','Audace'];
+const F={BILLY:'<rect x="24" y="8" width="52" height="84"/><path d="M24 36h52M24 64h52"/>',
+KALLAX:'<rect x="12" y="12" width="76" height="76"/><path d="M37 12v76M62 12v76M12 37h76M12 62h76"/>',
+'POÄNG':'<path d="M30 12c-8 22-8 42 4 60h34M30 12c14 8 26 24 30 50M34 72l-6 18M68 72l6 18"/>',
+EKTORP:'<rect x="10" y="40" width="80" height="34" rx="10"/><path d="M18 40V26q0-8 8-8h48q8 0 8 8v14M20 74v10M80 74v10"/>',
+STOCKHOLM:'<rect x="8" y="30" width="84" height="40" rx="3"/><path d="M36 70V30M64 70V30M14 70l-3 20M86 70l3 20"/><circle cx="32" cy="50" r="2"/><circle cx="68" cy="50" r="2"/>',
+LACK:'<rect x="14" y="30" width="72" height="10" rx="2"/><path d="M22 40v46M78 40v46"/>'};
+const AR={BILLY:[[.8,.5,.3,.4,.2],'Rangé·e, fiable, jamais à court d’étagères.','H 202 × L 80 cm · montage : 1 h'],
+KALLAX:[[.6,.9,.3,.5,.5],'Tout se combine, tout se range en cases.','H 147 × L 147 cm · montage : 2 h'],
+'POÄNG':[[.4,.3,.6,.6,.4],'Une courbe douce, un endroit où se poser.','H 100 × L 68 cm · montage : 40 min'],
+EKTORP:[[.5,.4,.8,.7,.3],'Chaleur, héritage et coussins qui ont vécu.','H 88 × L 218 cm · montage : 1 h 30'],
+STOCKHOLM:[[.4,.4,.4,.5,.9],'Une pièce de caractère, jamais anonyme.','H 74 × L 180 cm · montage : 3 h, clé Allen fournie'],
+LACK:[[.3,.7,.1,.2,.1],'Sobre, léger, s’adapte à tout.','H 45 × L 55 cm · montage : 10 min']};
+function pick(ax){return Object.entries(AR).map(([n,a])=>[n,a[0].reduce((s,v,j)=>s+(v-ax[j])**2,0)]).sort((a,b)=>a[1]-b[1])[0][0]}
+function view(){const m=$('#m'),s=stats();document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==T));
+if(s)document.documentElement.style.setProperty('--ac',rgb(s.palette[0]));
+$('#sub').textContent=s?`${s.n} pièces · ${s.o} tenues`:'Votre étagère culturelle';
+if(T=='d')return m.innerHTML=data();
+if(!s)return m.innerHTML='<div class="card"><h2>Bienvenue</h2><p>Importez l’export JSON de votre garde-robe dans l’onglet Données pour voir votre profil.</p></div>';
+if(T=='g')return m.innerHTML='<div class="grid">'+Object.values(S.items).sort((a,b)=>b.wears-a.wears).map(i=>`<figure><img src="${i.thumb}" alt=""><i>${i.colors.map(c=>`<b style="background:${rgb(c)}"></b>`).join('')}</i><figcaption>${i.wears}×${i.src=='manuel'?' ✎':''}</figcaption></figure>`).join('')+'</div>';
+const k=pick(s.ax);
+m.innerHTML=`<div class="niche"><svg viewBox="0 0 100 100">${F[k]}</svg><p class="mut">Votre meuble</p><div class="big">${k}</div><p>${AR[k][1]}</p><p class="mut" style="margin-top:6px">${AR[k][2]}</p><button id="sh" style="max-width:220px;margin:16px auto 0">Partager</button></div>
+<h2>Votre palette</h2><div class="pal">${s.palette.map(c=>`<i style="background:${rgb(c)}"></i>`).join('')}</div>
+<h2>Votre profil</h2>${AXL.map((l,j)=>`<div class="bar">${l}<span><b style="width:${Math.round(s.ax[j]*100)}%"></b></span></div>`).join('')}
+<h2>Ce qui revient</h2><div class="chips">${s.tags.map(([t,n])=>`<u>${lab(t)}<em>${n}</em></u>`).join('')}</div>
+<h2>En chiffres</h2><div class="stats"><div><span class="big">${s.n}</span>pièces</div><div><span class="big">${s.once}</span>portées 0-1 fois</div><div><span class="big">${s.o}</span>tenues</div></div>`;
+$('#sh').onclick=()=>{const t=`Mon meuble Ikea : ${k} — ${AR[k][1]} (Alcôve)`;navigator.share?navigator.share({text:t}):navigator.clipboard.writeText(t)}}
+function data(){const old=lastBk&&Date.now()-lastBk>2.6e9;return`<div class="card"><h3>Importer la garde-robe</h3><p class="mut">Export JSON de votre outil. Les pièces déjà connues sont fusionnées, rien n’est supprimé.</p><label class="btn">Choisir le fichier<input type="file" accept=".json" id="f" hidden></label><p class="mut" id="msg"></p></div>
+<div class="card"><h3>Ajouter une pièce</h3><input type="text" id="tg" placeholder="Tags séparés par des virgules (ex. robe, bleu, lin)"><label class="btn alt">Photo<input type="file" accept="image/*" capture="environment" id="ph" hidden></label></div>
+<div class="card"><h3>Sauvegarde</h3><p class="mut">${lastBk?(old?'Dernière sauvegarde il y a plus d’un mois.':'Dernière sauvegarde : '+new Date(lastBk).toLocaleDateString('fr')):'Aucune sauvegarde encore.'} Vos données ne vivent que sur ce téléphone.</p><button id="bk">Sauvegarder</button></div>`}
+const msg=t=>{const e=$('#msg');if(e)e.textContent=t};
+async function imp(file){try{msg('Lecture…');const d=JSON.parse(await file.text());
+if(d.alcove){S=d.alcove;await save();T='p';return view()}
+const it=d.items||[];let n=0;
+for(const o of it){const old=S.items[o.id];S.items[o.id]={id:o.id,tags:o.tags||[],wears:o.wears||0,wearDates:o.wearDates||[],thumb:o.thumb||await thumb(o.photo),colors:old&&old.colors.length?old.colors:await pal(o.photo||o.thumb),src:old?old.src:'export'};msg(`Pièces ${++n}/${it.length}`)}
+for(const[k,o]of Object.entries(d.outfits||{}))S.outfits[k]={pieces:o.pieces,date:o.date,city:o.city,temp:o.weatherTemp};
+await save();T='p';view()}catch(e){msg('Fichier illisible : '+e.message)}}
+async function addPiece(file){const src=URL.createObjectURL(file),id='m'+Date.now();S.items[id]={id,tags:$('#tg').value.split(',').map(t=>t.trim().toLowerCase().replace(/\s+/g,'-')).filter(Boolean),wears:0,wearDates:[],thumb:await thumb(src),colors:await pal(src),src:'manuel'};await save();T='g';view()}
+async function backup(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({alcove:S})],{type:'application/json'}));a.download='alcove-sauvegarde-'+new Date().toISOString().slice(0,10)+'.json';a.click();lastBk=Date.now();await kv('put','bk',lastBk);view()}
+document.addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(e.target.id=='f')imp(f);if(e.target.id=='ph')addPiece(f)});
+document.addEventListener('click',e=>{if(e.target.id=='bk')backup();if(e.target.dataset.t){T=e.target.dataset.t;view()}});
+(async()=>{S.items=await kv('get','items')||{};S.outfits=await kv('get','outfits')||{};lastBk=await kv('get','bk')||0;navigator.storage&&navigator.storage.persist&&navigator.storage.persist();view()})();
+if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
+</script></body></html>
